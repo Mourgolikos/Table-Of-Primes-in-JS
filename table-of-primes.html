@@ -1,0 +1,109 @@
+<head>
+
+    <style>
+        table, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+
+    <script>
+        var columns = 10;
+        var rows = 12;
+
+        function tableCreate(){
+            var body = document.body,
+                    tbl  = document.createElement('table');
+            tbl.id = 'SieveOfEratosthenes';
+            tbl.style.width  = '600px';
+            tbl.style.border = '1px solid gray';
+
+
+
+            for(var rowNum=0; rowNum<rows; rowNum++) {
+
+                var tr = tbl.insertRow();
+
+                for(var colNum=1; colNum<=columns; colNum++) {
+                    var num = rowNum*columns + colNum;
+
+
+                    var td = tr.insertCell();
+                    td.style.border = '1px solid black';
+                    td.id = num;
+                    td.innerHTML = num;
+
+                }
+            }
+
+
+            body.appendChild(tbl);
+
+            document.getElementById('1').innerHTML = '';
+
+        }
+        tableCreate();
+
+        function codeDivCreate(){
+            var nbsp = '&nbsp;&nbsp;&nbsp;';
+            function spanStart(intt){
+                return '<span id="codeLine' + intt + '" class="codeLine">';
+            }
+            var spanEnd = '</span>';
+            var codeList =
+                    [spanStart(1)+'function isPrime(n) {'+'<br>'+spanEnd,
+                        spanStart(2)+nbsp+'if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false;'+'<br>'+spanEnd,
+                        spanStart(3)+nbsp+'if (n%2==0) return (n==2);'+'<br>'+spanEnd,
+                        spanStart(4)+nbsp+'if (n%3==0) return (n==3);'+'<br>'+spanEnd,
+                        spanStart(5)+nbsp+'var m=Math.sqrt(n);'+'<br>'+spanEnd,
+                        spanStart(6)+nbsp+'for (var i=5;i<=m;i+=6) {'+'<br>'+spanEnd,
+                        spanStart(7)+nbsp+nbsp+'if (n%i==0) return false;'+'<br>'+spanEnd,
+                        spanStart(8)+nbsp+nbsp+'if (n%(i+2)==0) return false;'+'<br>'+spanEnd,
+                        spanStart(9)+nbsp+'}'+'<br>'+spanEnd,
+                        spanStart(10)+nbsp+'return true;'+'<br>'+spanEnd,
+                        spanStart(11)+'}'+'<br>'+spanEnd,
+                        spanStart(12)+'for (var number=2; number <= rows*columns; number++) {'+'<br>'+spanEnd,
+                        spanStart(13)+nbsp+'if (isPrime(number)){'+'<br>'+spanEnd,
+                        spanStart(14)+nbsp+nbsp+'document.getElementById(number).style.backgroundColor = "#DAC";'+'<br>'+spanEnd,
+                        spanStart(15)+nbsp+'}'+'<br>'+spanEnd,
+                        spanStart(16)+'}']+spanEnd;
+
+
+            var body = document.body,
+                    codeDiv = document.createElement('div');
+            codeDiv.style.backgroundColor = '#DDD';
+            codeDiv.innerHTML = codeList;
+
+
+            body.appendChild(codeDiv)
+        }
+        codeDivCreate();
+
+
+
+        function isPrime(n) {
+            if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false;
+            if (n%2==0) return (n==2);
+            if (n%3==0) return (n==3);
+            var m=Math.sqrt(n);
+            for (var i=5;i<=m;i+=6) {
+                if (n%i==0)     return false;
+                if (n%(i+2)==0) return false;
+            }
+            return true;
+        }
+
+
+        for (var number=2; number <= rows*columns; number++) {
+            if (isPrime(number)){
+                document.getElementById(number).style.backgroundColor = '#DAC';
+            }
+        }
+
+
+    </script>
+
+
+</body>
